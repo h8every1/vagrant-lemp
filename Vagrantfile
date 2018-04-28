@@ -23,15 +23,15 @@ if options['github_token'].nil? || options['github_token'].to_s.length != 40
   exit
 end
 
-vagrant_dir = File.basename(File.dirname(__FILE__))
+# add all directories in parent folder as domains
+vagrant_path = File.dirname(__FILE__)
 
 domains = {}
-Dir.chdir(vagrant_dir + '/../') do
+Dir.chdir("#{vagrant_path}/../") do
   Dir.glob('*').select { |f| File.directory? f
-  domains[f]=f unless f == vagrant_dir
+  domains[f]=f unless f == File.basename(vagrant_path)
   }
 end
-Dir.chdir(vagrant_dir)
 
 # vagrant configurate
 Vagrant.configure(2) do |config|
@@ -83,5 +83,9 @@ Vagrant.configure(2) do |config|
   config.vm.provision 'shell', path: './provision/always-as-root.sh', run: 'always'
 
   # post-install message (vagrant console)
-  #config.vm.post_up_message = "Frontend URL: http://#{domains[:frontend]}\nBackend URL: http://#{domains[:backend]}"
+  motd = ''
+  domains.values.each do |domain|
+    motd = motd + domain + "\n"
+  end
+  config.vm.post_up_message = "Active domains:\n"+motd
 end
