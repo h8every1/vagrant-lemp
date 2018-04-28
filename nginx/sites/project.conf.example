@@ -6,14 +6,14 @@ server {
    listen 80; ## listen for ipv4
    
    # Local URL of project
-   server_name project.test;
+   server_name PROJECT_NAME;
    # Path to root of the site. 
-   root        /app/project.test;
+   root        /app/PROJECT_NAME;
    index       index.html index.php;
    
    # Logs paths
-   access_log  /app/vagrant/nginx/log/project.access.log;
-   error_log   /app/vagrant/nginx/log/project.error.log;
+   access_log  /app/vagrant/nginx/log/PROJECT_NAME.access.log;
+   error_log   /app/vagrant/nginx/log/PROJECT_NAME.error.log;
 
    location / {
        # Redirect everything that isn't a real file to index.php
