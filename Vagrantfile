@@ -7,18 +7,6 @@ required_plugins.each do |plugin|
     exec "vagrant plugin install #{plugin}" unless Vagrant.has_plugin? plugin
 end
 
-domains = {
-  admin: 'admin.mts',
-  b2b: 'b2b.mts',
-  callback: 'callback.mts.api',
-  foris: 'foris.mts.api',
-  gui: 'gui.mts.api',
-  proxy: 'callback.mts.api',
-  mgts: 'admin.mgts',
-  cabinet: 'cabinet.b2b',
-  ag: 'ag.dev'
-}
-
 config = {
   local: './config/vagrant-local.yml',
   example: './config/vagrant-local.example.yml'
@@ -34,6 +22,16 @@ if options['github_token'].nil? || options['github_token'].to_s.length != 40
   puts "You must place REAL GitHub token into configuration:\n/yii2-app-advancded/vagrant/config/vagrant-local.yml"
   exit
 end
+
+vagrant_dir = File.basename(File.dirname(__FILE__))
+
+domains = {}
+Dir.chdir(vagrant_dir + '/../') do
+  Dir.glob('*').select { |f| File.directory? f
+  domains[f]=f unless f == vagrant_dir
+  }
+end
+Dir.chdir(vagrant_dir)
 
 # vagrant configurate
 Vagrant.configure(2) do |config|
@@ -61,7 +59,7 @@ Vagrant.configure(2) do |config|
   # network settings
   config.vm.network 'private_network', ip: options['ip']
 
-  # sync: folder 'yii2-app-advanced' (host machine) -> folder '/app' (guest machine)
+  # sync: parent folder of vagrant setup (host machine) -> folder '/app' (guest machine)
   config.vm.synced_folder '../', '/app', owner: 'vagrant', group: 'vagrant'
 
   # disable folder '/vagrant' (guest machine)
@@ -77,6 +75,10 @@ Vagrant.configure(2) do |config|
 
   # provisioners
   config.vm.provision 'shell', path: './provision/once-as-root.sh', args: [options['timezone']]
+
+  options['databases'].each do |db|
+    config.vm.provision 'shell', path: './provision/create-database.sh', args: [db]
+  end
   config.vm.provision 'shell', path: './provision/once-as-vagrant.sh', args: [options['github_token']], privileged: false
   config.vm.provision 'shell', path: './provision/always-as-root.sh', run: 'always'
 
