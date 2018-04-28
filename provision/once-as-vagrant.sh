@@ -21,21 +21,12 @@ echo "Done!"
 #composer global require "codeception/codeception=2.0.*" "codeception/specify=*" "codeception/verify=*" --no-progress
 echo 'export PATH=/home/vagrant/.config/composer/vendor/bin:$PATH' | tee -a /home/vagrant/.profile
 
-info "Install project dependencies"
-cd /app/safeinet-design
-composer --no-progress --prefer-dist install
-
-#info "Init project"
-#./init --env=Development --overwrite=y
-
-#info "Apply migrations"
-#./yii migrate <<< "yes"
-
 info "Create bash-alias 'app' for vagrant user"
-echo 'alias app="cd /app"' | tee /home/vagrant/.bash_aliases
+echo 'alias app="cd /app"' | tee -a /home/vagrant/.bash_aliases
 
-echo 'alias xon="export XDEBUG_CONFIG=\"profiler_enable=1\""' | tee /home/vagrant/.bash_aliases
-echo 'alias xoff="export XDEBUG_CONFIG=\"profiler_enable=0\""' | tee /home/vagrant/.bash_aliases
+info "Create bash-alias 'xon' and 'xoff' for vagrant user"
+echo 'alias xon="export XDEBUG_CONFIG=\"profiler_enable=1\""' | tee -a /home/vagrant/.bash_aliases
+echo 'alias xoff="export XDEBUG_CONFIG=\"profiler_enable=0\""' | tee -a /home/vagrant/.bash_aliases
 
 info "Enabling colorized prompt for guest console"
 sed -i "s/#force_color_prompt=yes/force_color_prompt=yes/" /home/vagrant/.bashrc
