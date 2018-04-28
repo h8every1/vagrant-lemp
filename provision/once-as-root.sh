@@ -21,11 +21,12 @@ debconf-set-selections <<< "mysql-community-server mysql-community-server/re-roo
 echo "Done!"
 
 info "Update OS software"
+add-apt-repository ppa:ondrej/php
 apt-get update
 apt-get upgrade -y
 
 info "Install additional software"
-apt-get install -y php7.0-curl php7.0-cli php7.0-intl php7.0-mysqlnd php7.0-gd php7.0-fpm php7.0-mbstring php7.0-xml php7.0-soap php7.0-ldap unzip nginx mysql-server-5.7 mc
+apt-get install -y php7.1-curl php7.1-cli php7.1-intl php7.1-mysqlnd php7.1-gd php7.1-fpm php7.1-mbstring php7.1-xml php7.1-soap php7.1-ldap unzip nginx mysql-server-5.7 mc
 
 info "Configure MySQL"
 sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
@@ -46,15 +47,9 @@ sed -i 's/user www-data/user vagrant/g' /etc/nginx/nginx.conf
 echo "Done!"
 
 info "Enabling site configuration"
-ln -s /app/vagrant/nginx/sites /etc/nginx/sites-include
 ln -s /app/vagrant/nginx/app.conf /etc/nginx/sites-enabled/app.conf
 echo "Done!"
 
-info "Initailize databases for MySQL"
-mysql -uroot <<< "CREATE DATABASE core CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci"
-mysql -uroot <<< "CREATE DATABASE stat1 CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci"
-mysql -uroot <<< "CREATE DATABASE catalog CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci"
-echo "Done!"
 
 info "Install composer"
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
