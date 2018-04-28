@@ -82,9 +82,11 @@ Vagrant.configure(2) do |config|
   config.vm.provision 'shell', path: './provision/once-as-vagrant.sh', args: [options['github_token']], privileged: false
   config.vm.provision 'shell', path: './provision/always-as-root.sh', run: 'always'
 
+
   # post-install message (vagrant console)
   motd = ''
   domains.values.each do |domain|
+    config.vm.provision 'shell', path: './provision/create-nginx-config.sh', args: [domain], privileged: false, run: 'always'
     motd = motd + domain + "\n"
   end
   config.vm.post_up_message = "Active domains:\n"+motd
