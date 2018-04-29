@@ -75,12 +75,11 @@ Vagrant.configure(2) do |config|
 
   # provisioners
   config.vm.provision 'shell', path: './provision/once-as-root.sh', args: [options['timezone']]
-
-  options['databases'].each do |db|
-    config.vm.provision 'shell', path: './provision/create-database.sh', args: [db]
-  end
   config.vm.provision 'shell', path: './provision/once-as-vagrant.sh', args: [options['github_token']], privileged: false
   config.vm.provision 'shell', path: './provision/always-as-root.sh', run: 'always'
+  options['databases'].each do |db|
+    config.vm.provision 'shell', path: './provision/create-database.sh', args: [db], run: 'always'
+  end
 
 
   # post-install message (vagrant console)
