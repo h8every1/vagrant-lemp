@@ -9,7 +9,7 @@ timezone: Europe/Moscow
 # Are we need check box updates for every 'vagrant up'?
 box_check_update: false
 
-# Virtual machine name
+# Virtual machine name (should be unique)
 machine_name: vagrant-project
 
 # Virtual machine IP
@@ -21,6 +21,7 @@ cpus: 1
 # Virtual machine RAM
 memory: 512
 
+# name of mysql users/databases to create on first run
 databases:
   - project1
   - project2
