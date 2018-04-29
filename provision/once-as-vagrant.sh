@@ -32,10 +32,12 @@ info "Enabling colorized prompt for guest console"
 sed -i "s/#force_color_prompt=yes/force_color_prompt=yes/" /home/vagrant/.bashrc
 
 
-info "Updating SSH keys"
-if [ -f ../ssh ]
+if [ -d ../ssh ]
 then
+  info "Importing SSH keys"
   [ -d ~/.ssh ] || mkdir ~/.ssh
   cp /app/vagrant/ssh/* ~/.ssh
+
+  [ -f ~/.ssh/config ] || touch ~/.ssh/config
   chmod 600 ~/.ssh/config
 fi
