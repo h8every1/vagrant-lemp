@@ -21,7 +21,7 @@ cpus: 1
 # Virtual machine RAM
 memory: 512
 
-# name of mysql users/databases to create on first run
+# name of mysql users/databases to create on vagrant startup
 databases:
   - project1
   - project2
