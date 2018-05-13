@@ -9,7 +9,7 @@ configs_path="/app/vagrant/nginx/sites"
 template_file="${configs_path}/project.conf.example"
 config_file="${configs_path}/${sitename}.conf"
 
-if [ ! -f $config_file ]
+if [[ ! -f $config_file ]]
 then
     info "Creating nginx config for $sitename"
     cp "$template_file" "$config_file"
