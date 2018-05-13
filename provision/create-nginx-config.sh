@@ -5,9 +5,9 @@ source /app/vagrant/provision/common.sh
 #== Import script args ==
 sitename=$(echo "$1")
 
-configs_path="/app/vagrant/nginx/sites"
-template_file="${configs_path}/project.conf.example"
-config_file="${configs_path}/${sitename}.conf"
+configs_path="/app/vagrant/nginx"
+template_file="${configs_path}/project.conf.template"
+config_file="${configs_path}/sites/${sitename}.conf"
 
 if [[ ! -f $config_file ]]
 then
