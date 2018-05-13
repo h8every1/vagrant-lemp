@@ -19,8 +19,7 @@ options = YAML.load_file config[:local]
 
 # check github token
 if options['github_token'].nil? || options['github_token'].to_s.length != 40
-  puts "You must place REAL GitHub token into configuration:\n/yii2-app-advancded/vagrant/config/vagrant-local.yml"
-  exit
+  options['github_token'] = 0
 end
 
 # add all directories in parent folder as domains

@@ -10,9 +10,15 @@ github_token=$(echo "$1")
 
 info "Provision-script user: `whoami`"
 
-info "Configure composer"
-composer config --global github-oauth.github.com ${github_token}
-info "Done!"
+
+if [[ $github_token ]] && [[ $github_token -ne 0 ]];
+then
+  info "Configure composer"
+  composer config --global github-oauth.github.com ${github_token}
+  info "Done!"
+else
+  info "No github token provided. Composer will ask for it when needed."
+fi
 
 #info "Install plugins for composer"
 #composer global require "fxp/composer-asset-plugin:^1.2.0" --no-progress
@@ -34,12 +40,12 @@ info "Enabling colorized prompt for guest console"
 sed -i "s/#force_color_prompt=yes/force_color_prompt=yes/" /home/vagrant/.bashrc
 
 
-if [ -d ../ssh ]
+if [[ -d ../ssh ]]
 then
   info "Importing SSH keys"
-  [ -d ~/.ssh ] || mkdir ~/.ssh
+  [[ -d ~/.ssh ]] || mkdir ~/.ssh
   cp /app/vagrant/ssh/* ~/.ssh
 
-  [ -f ~/.ssh/config ] || touch ~/.ssh/config
+  [[ -f ~/.ssh/config ]] || touch ~/.ssh/config
   chmod 600 ~/.ssh/config
 fi
