@@ -14,5 +14,5 @@ then
     info "Creating nginx config for $sitename"
     cp "$template_file" "$config_file"
     sed -i "s/PROJECT_NAME/$sitename/g" "$config_file"
-    echo "Done!"
+    info "Done!"
 fi

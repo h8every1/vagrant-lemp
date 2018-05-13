@@ -18,10 +18,12 @@ timedatectl set-timezone ${timezone} --no-ask-password
 info "Prepare root password for MySQL"
 debconf-set-selections <<< "mysql-community-server mysql-community-server/root-pass password \"''\""
 debconf-set-selections <<< "mysql-community-server mysql-community-server/re-root-pass password \"''\""
-echo "Done!"
+info "Done!"
+
+info "Add PHP 7.1/7.2 repository"
+add-apt-repository -y ppa:ondrej/php
 
 info "Update OS software"
-add-apt-repository -y ppa:ondrej/php
 apt-get update
 apt-get upgrade -y
 
@@ -34,21 +36,21 @@ mysql -uroot <<< "CREATE USER 'root'@'%' IDENTIFIED BY ''"
 mysql -uroot <<< "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION"
 mysql -uroot <<< "DROP USER 'root'@'localhost'"
 mysql -uroot <<< "FLUSH PRIVILEGES"
-echo "Done!"
+info "Done!"
 
 info "Configure PHP-FPM"
 sed -i 's/user = www-data/user = vagrant/g' /etc/php/7.1/fpm/pool.d/www.conf
 sed -i 's/group = www-data/group = vagrant/g' /etc/php/7.1/fpm/pool.d/www.conf
 sed -i 's/owner = www-data/owner = vagrant/g' /etc/php/7.1/fpm/pool.d/www.conf
-echo "Done!"
+info "Done!"
 
 info "Configure NGINX"
 sed -i 's/user www-data/user vagrant/g' /etc/nginx/nginx.conf
-echo "Done!"
+info "Done!"
 
 info "Enabling site configuration"
 ln -s /app/vagrant/nginx/app.conf /etc/nginx/sites-enabled/app.conf
-echo "Done!"
+info "Done!"
 
 
 info "Install composer"

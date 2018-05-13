@@ -13,5 +13,5 @@ if ! mysql -uroot -e "use $db" 2>/dev/null; then
     mysql -uroot <<< "CREATE USER '${db}'@'%' IDENTIFIED BY ''"
     mysql -uroot <<< "GRANT ALL PRIVILEGES ON ${db}.* TO '${db}'@'%'"
     mysql -uroot <<< "FLUSH PRIVILEGES"
-    echo "Done!"
+    info "Done!"
 fi
