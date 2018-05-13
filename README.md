@@ -47,14 +47,14 @@ Copy and edit config file
 ```bash
 cp ./config/vagrant-local.example.yml ./config/vagrant-local.yml
 ```
-If you don't do it manuallly, the `vagrant-local.yml` config file will be created automatically on first run. But you'll have to edit it anyway.
+If you don't do it manually, the `vagrant-local.yml` config file will be created automatically on first run.
 
 Edit newly created config file with your favorite text editor
 ```bash
 vim ./config/vagrant-local.yml
 ```
 
-The most important thing is your [GitHub token](https://github.com/blog/1509-personal-api-tokens). You can generate it here: https://github.com/settings/tokens That token is used for Composer.
+The most important thing is your [GitHub token](https://github.com/blog/1509-personal-api-tokens). You can generate it here: https://github.com/settings/tokens That token is used for Composer and is imported on first run of VM. If you don't provide it, Composer will ask for your token when needed.
 
 `machine_name` is used by Virtualbox and should be unique in your system. I.e. you can't have two `vagrant-project` virtual machines.
 
