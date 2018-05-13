@@ -65,3 +65,9 @@ There's also `root` MySQL user with empty password that can access all databases
 ## Adding URLs
 
 Just create new folder inside your projects root folder and `vagrant halt && vagrant up` (to run `hostmanager` provision) inside `vagrant-lemp` folder.
+
+## NGINX configs
+
+Configs are automatically created at each start of Vagrant and are stored in `./nginx/sites/*.conf` files. One file per each project folder. You can safely edit those files, script won't overwrite them (but will recreate configs if you delete them).
+
+The template for those files is `./nginx/project.conf.template`. You can edit it to suit your everyday needs.
