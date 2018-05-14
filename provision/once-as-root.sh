@@ -44,6 +44,29 @@ sed -i 's/group = www-data/group = vagrant/g' /etc/php/7.1/fpm/pool.d/www.conf
 sed -i 's/owner = www-data/owner = vagrant/g' /etc/php/7.1/fpm/pool.d/www.conf
 info "Done!"
 
+
+info "Configure xDebug"
+function xdebug_config {
+  xdebug_path="/etc/php/$1/mods-available/"
+  xdebug_config="${xdebug_path}xdebug.ini"
+
+  if [[ ! -d $xdebug_path ]]; then
+    return 1
+  fi
+
+  if [[ -f $xdebug_config ]]; then
+    mv ${xdebug_config} ${xdebug_config}.bak
+  fi
+
+  ln -s /app/vagrant/config/xdebug.ini ${xdebug_config}
+}
+
+xdebug_config "5.6"
+xdebug_config "7.0"
+xdebug_config "7.1"
+xdebug_config "7.2"
+info "Done!"
+
 info "Configure NGINX"
 sed -i 's/user www-data/user vagrant/g' /etc/nginx/nginx.conf
 info "Done!"
