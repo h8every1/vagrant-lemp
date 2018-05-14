@@ -71,3 +71,8 @@ Just create new folder inside your projects root folder and `vagrant halt && vag
 Configs are automatically created at each start of Vagrant and are stored in `./nginx/sites/*.conf` files. One file per each project folder. You can safely edit those files, script won't overwrite them (but will recreate configs if you delete them).
 
 The template for those files is `./config/nginx-project.template.conf`. You can edit it to suit your everyday needs.
+
+## xDebug config
+xDebug should be up and running on first run. You only need to configure your IDE. Be sure to map your local project directory to directory inside `/app` on remote machine.
+
+In case you need to edit xDebug config, it is located in `./config/xdebug.ini`. Don't forget to restart `php-fpm` after editing.
