@@ -42,8 +42,15 @@ git clone https://github.com/h8every1/vagrant-lemp.git
 cd vagrant-lemp 
 ```
 
+Run Vagrant
+```
+vagrant up
+```
+
 ## Configuring Vagrant
-Copy and edit config file
+Before starting Vagrant for the first time you might want to do a little setup.
+
+Copy and edit main config file
 ```bash
 cp ./config/vagrant-local.example.yml ./config/vagrant-local.yml
 ```
@@ -54,7 +61,7 @@ Edit newly created config file with your favorite text editor
 vim ./config/vagrant-local.yml
 ```
 
-The most important thing is your [GitHub token](https://github.com/blog/1509-personal-api-tokens). You can generate it here: https://github.com/settings/tokens That token is used for Composer and is imported on first run of VM. If you don't provide it, Composer will ask for your token when needed.
+You can provide your [GitHub token](https://github.com/blog/1509-personal-api-tokens) which will be used by Composer. You can generate it here: https://github.com/settings/tokens If you don't provide it, Composer will ask for your token when needed.
 
 `machine_name` is used by Virtualbox and should be unique in your system. I.e. you can't have two `vagrant-project` virtual machines.
 
